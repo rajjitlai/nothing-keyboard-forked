@@ -245,6 +245,8 @@ public final class Constants {
     public static final int CODE_SHIFT_ENTER = -12;
     public static final int CODE_SYMBOL_SHIFT = -13;
     public static final int CODE_ALPHA_FROM_EMOJI = -14;
+    /** Key code for AI assistant capture/action. */
+    public static final int CODE_AI_ASSIST = -16;
     // Code value representing the code is not specified.
     public static final int CODE_UNSPECIFIED = -15;
 

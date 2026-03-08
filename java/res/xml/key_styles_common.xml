@@ -107,6 +107,11 @@
         latin:altCode="!code/key_space"
         latin:backgroundType="functional" />
     <key-style
+        latin:styleName="aiAssistKeyStyle"
+        latin:keySpec="~|!code/key_ai_assist"
+        latin:keyActionFlags="noKeyPreview"
+        latin:backgroundType="functional" />
+    <key-style
         latin:styleName="tabKeyStyle"
         latin:keySpec="!icon/tab_key|!code/key_tab"
         latin:backgroundType="functional" />

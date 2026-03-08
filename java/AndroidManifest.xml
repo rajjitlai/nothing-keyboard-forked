@@ -26,6 +26,8 @@
     <uses-permission android:name="android.permission.WAKE_LOCK"/>
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE"/>
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE_SPECIAL_USE"/>
+    <!-- Required on Android 14+ when starting a foreground service for MediaProjection -->
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_MEDIA_PROJECTION" />
 
     <uses-permission android:name="com.nothing.ketchum.permission.ENABLE"/>
     <uses-permission android:name="android.permission.INTERNET" />
@@ -121,6 +123,12 @@
              android:taskAffinity="">
         </activity>
 
+        <activity android:name=".capture.CapturePermissionActivity"
+             android:theme="@android:style/Theme.Translucent.NoTitleBar"
+             android:exported="true"
+             android:taskAffinity="">
+        </activity>
+
         <activity android:name=".spellcheck.SpellCheckerSettingsActivity"
              android:theme="@style/platformSettingsTheme"
              android:label="@string/android_spell_checker_settings"
@@ -150,6 +158,10 @@
                 android:value="Neural network model training"/>
 
         </service>
+
+        <service android:name=".capture.CaptureService"
+             android:exported="false"
+             android:foregroundServiceType="mediaProjection" />
 
         <activity
             android:name=".payment.PaymentCompleteActivity"

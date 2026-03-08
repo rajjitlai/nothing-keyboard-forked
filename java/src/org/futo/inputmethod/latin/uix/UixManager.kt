@@ -60,6 +60,7 @@ import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.platform.ViewCompositionStrategy
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
+import androidx.compose.foundation.layout.offset
 import androidx.lifecycle.LifecycleCoroutineScope
 import androidx.lifecycle.lifecycleScope
 import kotlinx.coroutines.launch
@@ -94,6 +95,7 @@ import org.futo.inputmethod.updates.isManualUpdateTimeExpired
 import org.futo.inputmethod.updates.openManualUpdateCheck
 import org.futo.inputmethod.updates.retrieveSavedLastUpdateCheckResult
 import java.util.Locale
+import org.futo.voiceinput.shared.ui.FakeToast
 
 val LocalManager = staticCompositionLocalOf<KeyboardManagerForAction> {
     error("No LocalManager provided")
@@ -320,6 +322,13 @@ class UixManager(private val latinIME: LatinIME) {
 
     private var numSuggestionsSinceNotice = 0
     private var currentNotice: MutableState<ImportantNotice?> = mutableStateOf(null)
+
+    // Assistant transient message (shown via FakeToast)
+    val assistantMessage: MutableState<String?> = mutableStateOf(null)
+
+    fun showAssistantMessage(msg: String?) {
+        assistantMessage.value = msg
+    }
 
     private var isActionsExpanded = mutableStateOf(false)
     private fun toggleActionsExpanded() {
@@ -642,19 +651,22 @@ class UixManager(private val latinIME: LatinIME) {
                                         latinIME.updateTouchableHeight(it.height)
                                     }, color = latinIME.keyboardColor) {
                                         Box {
-                                            Column {
-                                                when {
-                                                    currWindowActionWindow != null -> ActionViewWithHeader(
-                                                        currWindowActionWindow!!
-                                                    )
+                                        Column {
+                                            when {
+                                                currWindowActionWindow != null -> ActionViewWithHeader(
+                                                    currWindowActionWindow!!
+                                                )
 
-                                                    else -> MainKeyboardViewWithActionBar()
+                                                else -> MainKeyboardViewWithActionBar()
                                                 }
 
                                                 latinIME.LegacyKeyboardView(hidden = isMainKeyboardHidden)
                                             }
 
                                             ForgetWordDialog()
+
+                                            // Assistant transient message (FakeToast) shown at bottom center
+                                            FakeToast(modifier = Modifier.align(Alignment.BottomCenter).offset(y = (-16).dp), message = assistantMessage.value)
                                         }
                                     }
                                 }

@@ -82,7 +82,7 @@ fun AnimatedRecognizeCircle(magnitude: MutableFloatState = mutableFloatStateOf(0
 }
 
 @Composable
-private fun FakeToast(modifier: Modifier, message: String?) {
+fun FakeToast(modifier: Modifier, message: String?) {
     val visible = remember { mutableStateOf(false) }
 
     LaunchedEffect(message) {

@@ -718,6 +718,9 @@ public final class InputLogic {
             case Constants.CODE_SETTINGS:
                 onSettingsKeyPressed();
                 break;
+            case Constants.CODE_AI_ASSIST:
+                onAiAssistKeyPressed();
+                break;
             case Constants.CODE_SHORTCUT:
                 // We need to switch to the shortcut IME. This is handled by LatinIME since the
                 // input logic has no business with IME switching.
@@ -1999,6 +2002,14 @@ public final class InputLogic {
      */
     private void onSettingsKeyPressed() {
         mLatinIMELegacy.displaySettingsDialog();
+    }
+
+    /** Handle AI assist key press from the keyboard. */
+    private void onAiAssistKeyPressed() {
+        final android.inputmethodservice.InputMethodService ims = mLatinIMELegacy.getInputMethodService();
+        if (ims instanceof org.futo.inputmethod.latin.LatinIME) {
+            ((org.futo.inputmethod.latin.LatinIME) ims).startAiAssist();
+        }
     }
 
     /**
